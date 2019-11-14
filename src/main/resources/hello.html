@@ -6,11 +6,16 @@
 
     <script>
         function updateHello(user){
-            document.getElementById("helloprompt").innerHTML="Hello: " + user;
+            var u = JSON.parse(user)
+            document.getElementById("helloprompt").innerHTML="Hello: " + u.name;
         }
 
         function clearHello(user){
             document.getElementById("helloprompt").innerHTML="Hello <a href='http://java-buddy.blogspot.com/'>Java-Buddy</a>";
+        }
+
+        function showAlert(message){
+            alert(message);
         }
     </script>
 

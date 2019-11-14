@@ -1,4 +1,6 @@
 import java.net.URL;
+
+import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,12 +43,25 @@ public class JavaFxBrowser extends Application {
         primaryStage.show();
     }
 
+    class User {
+
+        private String name;
+
+        public User(){}
+
+        public void setName(String name){
+            this.name = name;
+        }
+    }
+
     class MyBrowser extends Region{
 
         HBox toolbar;
 
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
+
+        String str = "My str";
 
         public MyBrowser(){
 
@@ -61,7 +76,10 @@ public class JavaFxBrowser extends Application {
 
                 @Override
                 public void handle(ActionEvent arg0) {
-                    webEngine.executeScript( " updateHello(' " + textField.getText() + " ') " );
+                    User usr = new User();
+                    usr.setName(textField.getText());
+                    Gson gson = new Gson();
+                    webEngine.executeScript( " updateHello(' " + gson.toJson(usr) + " ') " );
                 }
             });
 
@@ -80,6 +98,8 @@ public class JavaFxBrowser extends Application {
             toolbar.setSpacing(10);
             toolbar.setStyle("-fx-background-color: #336699");
             toolbar.getChildren().addAll(textField, buttonEnter, buttonClear);
+
+
 
             getChildren().add(toolbar);
             getChildren().add(webView);
